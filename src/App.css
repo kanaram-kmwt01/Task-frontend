@@ -1,0 +1,19 @@
+body{
+    background-color: rgb(221, 221, 221);
+}
+
+.login{
+    width: 30%;
+    margin: auto;
+    border: 1px solid;
+    background-color: aliceblue;
+    border-radius: 20px;
+    margin-top: 40px;
+    box-shadow: 2px 2px 20px rgba(158, 157, 157, 0.995);
+}
+input{
+    border: 1px solid;
+}
+input:focus{
+    border: none;
+}
