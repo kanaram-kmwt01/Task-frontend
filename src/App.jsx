@@ -4,6 +4,8 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './Compontents/Login'
 import Signup from './Compontents/Signup'
+import Forgetpassword from './Pages/Password/Forgetpassword'
+import Home from './Compontents/Home'
 
 function App() {
 
@@ -13,6 +15,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path='/signup' element={<Signup/>}/>
+          <Route path='/home' element={<Home/>}/>
+          <Route path='/forget' element={<Forgetpassword/>}/>
         </Routes>
       </BrowserRouter>
     </>

@@ -1,14 +1,62 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 function Login() {
-    let [login,setlogin]=useState([])
+    let [login, setlogin] = useState([])
 
-    let inputvalue=(e)=>{
+    let inputvalue = (e) => {
         setlogin(
-            {...login,[e.target.name]:e.target.value}
+            { ...login, [e.target.name]: e.target.value }
         )
     }
+
+    let go = useNavigate()
+    // allusers-----------------------------------------------------------------------------------
+    let [already, setalready] = useState([])
+
+    useEffect(() => {
+        allusers()
+    }, [])
+    let allusers = () => {
+        axios.get("http://localhost:8080/allusers").then((res) => {
+            if (res.data.status) {
+                setalready(res.data.Ourusers)
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    let loginbtn=()=>{
+        let filteruser=already.filter((item)=>item.email==login.email)
+        let existdata=filteruser[0]
+        
+        if(!login.email || !login.password){
+            alert("Fill the login form....!")
+        }
+        else if(!existdata){
+            Swal.fire({
+                icon:"error",
+                title:"Invalid email"
+            })
+        }
+        else if(existdata.password != login.password){
+            Swal.fire({
+                icon:"error",
+                title:"Invalid password"
+            })
+        }
+        else{
+            Swal.fire({
+                icon:"success",
+                title:"Successfully login...!"
+            })
+            go("/home")
+        }
+    }
+    
     return (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-10 lg:px-8  login">
@@ -24,7 +72,7 @@ function Login() {
                 </div>
 
                 <div className="mt-7 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form action="#" method="POST" className="space-y-6">
+                    <div className="space-y-6">
                         <div>
                             <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                                 Email address
@@ -47,9 +95,9 @@ function Login() {
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    <Link to="/forget" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                         Forgot password?
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="mt-2">
@@ -66,13 +114,13 @@ function Login() {
 
                         <div>
                             <button
-                                type="submit"
+                                onClick={loginbtn}
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Sign in
                             </button>
                         </div>
-                    </form>
+                    </div>
 
                     <p className="mt-10 text-center text-sm/6 text-gray-500">
                         Not a member?{' '}

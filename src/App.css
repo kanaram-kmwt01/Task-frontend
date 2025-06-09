@@ -1,12 +1,15 @@
 body{
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(211, 209, 209);
+}
+.heading{
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .login{
     width: 30%;
     margin: auto;
     border: 1px solid;
-    background-color: aliceblue;
+    background-color: rgb(237, 238, 240);
     border-radius: 20px;
     margin-top: 40px;
     box-shadow: 2px 2px 20px rgba(158, 157, 157, 0.995);
